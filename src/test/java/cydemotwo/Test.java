@@ -127,6 +127,11 @@ public class Test {
 	}
 
 	public static void main(String[] args) {
+		/***************
+		 * test1分支提交
+		 ************/
+		
+		
 /*		for (int m = 1; m <= 12; m++) {
 			for (int d = 1; d <= 31; d++) {				
 				String sql = "alter table sms_history_" + String.format("%1$02d%2$02d", m,d) + " modify content varchar(5000);";
