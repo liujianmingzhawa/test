@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.everything.demo.mapper.HttpsRptMapper" >
+  <resultMap id="BaseResultMap" type="com.everything.demo.po.HttpsRpt" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP" />
+    <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP" />
+    <result column="sms_history_id" property="smsHistoryId" jdbcType="BIGINT" />
+    <result column="uuid" property="uuid" jdbcType="VARCHAR" />
+    <result column="origin" property="origin" jdbcType="VARCHAR" />
+    <result column="src_msg_id" property="srcMsgId" jdbcType="VARCHAR" />
+    <result column="dest_seq_id" property="destSeqId" jdbcType="VARCHAR" />
+    <result column="src_channel" property="srcChannel" jdbcType="VARCHAR" />
+    <result column="dest_channel" property="destChannel" jdbcType="VARCHAR" />
+    <result column="src_number" property="srcNumber" jdbcType="VARCHAR" />
+    <result column="dest_number" property="destNumber" jdbcType="VARCHAR" />
+    <result column="sms_size" property="smsSize" jdbcType="INTEGER" />
+    <result column="sms_number" property="smsNumber" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="error" property="error" jdbcType="VARCHAR" />
+    <result column="gateway" property="gateway" jdbcType="INTEGER" />
+    <result column="country" property="country" jdbcType="VARCHAR" />
+    <result column="province" property="province" jdbcType="VARCHAR" />
+    <result column="gmt_schedule" property="gmtSchedule" jdbcType="TIMESTAMP" />
+    <result column="gmt_report" property="gmtReport" jdbcType="TIMESTAMP" />
+    <result column="host_name" property="hostName" jdbcType="VARCHAR" />
+    <result column="hash_value" property="hashValue" jdbcType="INTEGER" />
+    <result column="retry_times" property="retryTimes" jdbcType="INTEGER" />
+    <result column="gmt_retry" property="gmtRetry" jdbcType="TIMESTAMP" />
+    <result column="is_pull" property="isPull" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, gmt_create, gmt_modified, sms_history_id, uuid, origin, src_msg_id, dest_seq_id, 
+    src_channel, dest_channel, src_number, dest_number, sms_size, sms_number, status, 
+    code, error, gateway, country, province, gmt_schedule, gmt_report, host_name, hash_value, 
+    retry_times, gmt_retry, is_pull
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from https_rpt
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from https_rpt
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.everything.demo.po.HttpsRpt" >
+    insert into https_rpt (id, gmt_create, gmt_modified, 
+      sms_history_id, uuid, origin, 
+      src_msg_id, dest_seq_id, src_channel, 
+      dest_channel, src_number, dest_number, 
+      sms_size, sms_number, status, 
+      code, error, gateway, 
+      country, province, gmt_schedule, 
+      gmt_report, host_name, hash_value, 
+      retry_times, gmt_retry, is_pull
+      )
+    values (#{id,jdbcType=BIGINT}, #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP}, 
+      #{smsHistoryId,jdbcType=BIGINT}, #{uuid,jdbcType=VARCHAR}, #{origin,jdbcType=VARCHAR}, 
+      #{srcMsgId,jdbcType=VARCHAR}, #{destSeqId,jdbcType=VARCHAR}, #{srcChannel,jdbcType=VARCHAR}, 
+      #{destChannel,jdbcType=VARCHAR}, #{srcNumber,jdbcType=VARCHAR}, #{destNumber,jdbcType=VARCHAR}, 
+      #{smsSize,jdbcType=INTEGER}, #{smsNumber,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, 
+      #{code,jdbcType=VARCHAR}, #{error,jdbcType=VARCHAR}, #{gateway,jdbcType=INTEGER}, 
+      #{country,jdbcType=VARCHAR}, #{province,jdbcType=VARCHAR}, #{gmtSchedule,jdbcType=TIMESTAMP}, 
+      #{gmtReport,jdbcType=TIMESTAMP}, #{hostName,jdbcType=VARCHAR}, #{hashValue,jdbcType=INTEGER}, 
+      #{retryTimes,jdbcType=INTEGER}, #{gmtRetry,jdbcType=TIMESTAMP}, #{isPull,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.everything.demo.po.HttpsRpt" >
+    insert into https_rpt
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="gmtCreate != null" >
+        gmt_create,
+      </if>
+      <if test="gmtModified != null" >
+        gmt_modified,
+      </if>
+      <if test="smsHistoryId != null" >
+        sms_history_id,
+      </if>
+      <if test="uuid != null" >
+        uuid,
+      </if>
+      <if test="origin != null" >
+        origin,
+      </if>
+      <if test="srcMsgId != null" >
+        src_msg_id,
+      </if>
+      <if test="destSeqId != null" >
+        dest_seq_id,
+      </if>
+      <if test="srcChannel != null" >
+        src_channel,
+      </if>
+      <if test="destChannel != null" >
+        dest_channel,
+      </if>
+      <if test="srcNumber != null" >
+        src_number,
+      </if>
+      <if test="destNumber != null" >
+        dest_number,
+      </if>
+      <if test="smsSize != null" >
+        sms_size,
+      </if>
+      <if test="smsNumber != null" >
+        sms_number,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="error != null" >
+        error,
+      </if>
+      <if test="gateway != null" >
+        gateway,
+      </if>
+      <if test="country != null" >
+        country,
+      </if>
+      <if test="province != null" >
+        province,
+      </if>
+      <if test="gmtSchedule != null" >
+        gmt_schedule,
+      </if>
+      <if test="gmtReport != null" >
+        gmt_report,
+      </if>
+      <if test="hostName != null" >
+        host_name,
+      </if>
+      <if test="hashValue != null" >
+        hash_value,
+      </if>
+      <if test="retryTimes != null" >
+        retry_times,
+      </if>
+      <if test="gmtRetry != null" >
+        gmt_retry,
+      </if>
+      <if test="isPull != null" >
+        is_pull,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="gmtCreate != null" >
+        #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null" >
+        #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="smsHistoryId != null" >
+        #{smsHistoryId,jdbcType=BIGINT},
+      </if>
+      <if test="uuid != null" >
+        #{uuid,jdbcType=VARCHAR},
+      </if>
+      <if test="origin != null" >
+        #{origin,jdbcType=VARCHAR},
+      </if>
+      <if test="srcMsgId != null" >
+        #{srcMsgId,jdbcType=VARCHAR},
+      </if>
+      <if test="destSeqId != null" >
+        #{destSeqId,jdbcType=VARCHAR},
+      </if>
+      <if test="srcChannel != null" >
+        #{srcChannel,jdbcType=VARCHAR},
+      </if>
+      <if test="destChannel != null" >
+        #{destChannel,jdbcType=VARCHAR},
+      </if>
+      <if test="srcNumber != null" >
+        #{srcNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="destNumber != null" >
+        #{destNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="smsSize != null" >
+        #{smsSize,jdbcType=INTEGER},
+      </if>
+      <if test="smsNumber != null" >
+        #{smsNumber,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="error != null" >
+        #{error,jdbcType=VARCHAR},
+      </if>
+      <if test="gateway != null" >
+        #{gateway,jdbcType=INTEGER},
+      </if>
+      <if test="country != null" >
+        #{country,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null" >
+        #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="gmtSchedule != null" >
+        #{gmtSchedule,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtReport != null" >
+        #{gmtReport,jdbcType=TIMESTAMP},
+      </if>
+      <if test="hostName != null" >
+        #{hostName,jdbcType=VARCHAR},
+      </if>
+      <if test="hashValue != null" >
+        #{hashValue,jdbcType=INTEGER},
+      </if>
+      <if test="retryTimes != null" >
+        #{retryTimes,jdbcType=INTEGER},
+      </if>
+      <if test="gmtRetry != null" >
+        #{gmtRetry,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isPull != null" >
+        #{isPull,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.everything.demo.po.HttpsRpt" >
+    update https_rpt
+    <set >
+      <if test="gmtCreate != null" >
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null" >
+        gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="smsHistoryId != null" >
+        sms_history_id = #{smsHistoryId,jdbcType=BIGINT},
+      </if>
+      <if test="uuid != null" >
+        uuid = #{uuid,jdbcType=VARCHAR},
+      </if>
+      <if test="origin != null" >
+        origin = #{origin,jdbcType=VARCHAR},
+      </if>
+      <if test="srcMsgId != null" >
+        src_msg_id = #{srcMsgId,jdbcType=VARCHAR},
+      </if>
+      <if test="destSeqId != null" >
+        dest_seq_id = #{destSeqId,jdbcType=VARCHAR},
+      </if>
+      <if test="srcChannel != null" >
+        src_channel = #{srcChannel,jdbcType=VARCHAR},
+      </if>
+      <if test="destChannel != null" >
+        dest_channel = #{destChannel,jdbcType=VARCHAR},
+      </if>
+      <if test="srcNumber != null" >
+        src_number = #{srcNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="destNumber != null" >
+        dest_number = #{destNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="smsSize != null" >
+        sms_size = #{smsSize,jdbcType=INTEGER},
+      </if>
+      <if test="smsNumber != null" >
+        sms_number = #{smsNumber,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="error != null" >
+        error = #{error,jdbcType=VARCHAR},
+      </if>
+      <if test="gateway != null" >
+        gateway = #{gateway,jdbcType=INTEGER},
+      </if>
+      <if test="country != null" >
+        country = #{country,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null" >
+        province = #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="gmtSchedule != null" >
+        gmt_schedule = #{gmtSchedule,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtReport != null" >
+        gmt_report = #{gmtReport,jdbcType=TIMESTAMP},
+      </if>
+      <if test="hostName != null" >
+        host_name = #{hostName,jdbcType=VARCHAR},
+      </if>
+      <if test="hashValue != null" >
+        hash_value = #{hashValue,jdbcType=INTEGER},
+      </if>
+      <if test="retryTimes != null" >
+        retry_times = #{retryTimes,jdbcType=INTEGER},
+      </if>
+      <if test="gmtRetry != null" >
+        gmt_retry = #{gmtRetry,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isPull != null" >
+        is_pull = #{isPull,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.everything.demo.po.HttpsRpt" >
+    update https_rpt
+    set gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      sms_history_id = #{smsHistoryId,jdbcType=BIGINT},
+      uuid = #{uuid,jdbcType=VARCHAR},
+      origin = #{origin,jdbcType=VARCHAR},
+      src_msg_id = #{srcMsgId,jdbcType=VARCHAR},
+      dest_seq_id = #{destSeqId,jdbcType=VARCHAR},
+      src_channel = #{srcChannel,jdbcType=VARCHAR},
+      dest_channel = #{destChannel,jdbcType=VARCHAR},
+      src_number = #{srcNumber,jdbcType=VARCHAR},
+      dest_number = #{destNumber,jdbcType=VARCHAR},
+      sms_size = #{smsSize,jdbcType=INTEGER},
+      sms_number = #{smsNumber,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      code = #{code,jdbcType=VARCHAR},
+      error = #{error,jdbcType=VARCHAR},
+      gateway = #{gateway,jdbcType=INTEGER},
+      country = #{country,jdbcType=VARCHAR},
+      province = #{province,jdbcType=VARCHAR},
+      gmt_schedule = #{gmtSchedule,jdbcType=TIMESTAMP},
+      gmt_report = #{gmtReport,jdbcType=TIMESTAMP},
+      host_name = #{hostName,jdbcType=VARCHAR},
+      hash_value = #{hashValue,jdbcType=INTEGER},
+      retry_times = #{retryTimes,jdbcType=INTEGER},
+      gmt_retry = #{gmtRetry,jdbcType=TIMESTAMP},
+      is_pull = #{isPull,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectHttpsRptByUuid" parameterType="java.lang.String" resultType="int">
+  	select count(1) from https_rpt where uuid = #{uuid,jdbcType=VARCHAR}
+  </select>
+  <select id="selectListByLimit" parameterType="java.util.Map" resultType="com.everything.demo.po.HttpsRpt">
+  	select id,dest_number,gmt_report,status,code,uuid from https_rpt 
+  	where src_channel = #{srcChannel,jdbcType=VARCHAR} and is_pull = #{isPull,jdbcType=INTEGER} limit #{count}
+  </select>
+  <update id="updateBatchByIds" parameterType="java.util.List">
+  	update https_rpt 
+  		set is_pull = 1 
+  	where 
+  	    <foreach collection="ids" item="id"  open="(" close=")" separator=",">
+           #{id,jdbcType=BIGINT}          
+        </foreach>
+  </update>
+  <delete id="deleteByDateAndHashValue" parameterType="java.util.Map">
+  	 delete from https_rpt    		
+  	 	where gmt_create like concat('%', #{date,jdbcType=VARCHAR}, '%')
+   		    and hash_value = #{hashValue,jdbcType=INTEGER}
+  </delete>
+</mapper>

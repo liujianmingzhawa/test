@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.everything.demo.mapper.BlackListMapper">
+  <resultMap id="BaseResultMap" type="com.everything.demo.po.BlackList">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
+    <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
+    <result column="black_number" jdbcType="VARCHAR" property="blackNumber" />
+    <result column="channel_name" jdbcType="VARCHAR" property="channelName" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, gmt_create, gmt_modified, black_number, channel_name, type, description
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from black_list
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from black_list
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.everything.demo.po.BlackList">
+    insert into black_list (id, gmt_create, gmt_modified, 
+      black_number, channel_name, type, description
+      )
+    values (#{id,jdbcType=BIGINT}, #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP}, 
+      #{blackNumber,jdbcType=VARCHAR}, #{channelName,jdbcType=VARCHAR},#{type,jdbcType=INTEGER}, #{description,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.everything.demo.po.BlackList">
+    insert into black_list
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create,
+      </if>
+      <if test="gmtModified != null">
+        gmt_modified,
+      </if>
+      <if test="blackNumber != null">
+        black_number,
+      </if>
+      <if test="channelName != null">
+        channel_name,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="gmtCreate != null">
+        #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null">
+        #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="blackNumber != null">
+        #{blackNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="channelName != null">
+        #{channelName,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.everything.demo.po.BlackList">
+    update black_list
+    <set>
+      <if test="gmtCreate != null">
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null">
+        gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="blackNumber != null">
+        black_number = #{blackNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="channelName != null">
+        channel_name = #{channelName,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.everything.demo.po.BlackList">
+    update black_list
+    set gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      black_number = #{blackNumber,jdbcType=VARCHAR},
+      channel_name = #{channelName,jdbcType=VARCHAR},
+      type = #{type,jdbcType=INTEGER},
+      description = #{description,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByCount" parameterType="java.util.Map" resultType="java.lang.Long">
+    select count(0) from black_list where black_number like concat(#{blackNumber,jdbcType=VARCHAR}, '%')
+  </select>
+  <select id="selectByPage" parameterType="java.util.Map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from black_list
+    where black_number like concat(#{blackNumber,jdbcType=VARCHAR}, '%')
+    limit #{offset,jdbcType=INTEGER}, #{size,jdbcType=INTEGER}
+  </select>
+  
+    <!-- 黑名单去重批量入库 -->
+  <insert id="batchInsertBlackList" parameterType="com.everything.demo.po.BlackList">
+  	REPLACE INTO  black_list
+  	  <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create,
+      </if>
+      <if test="gmtModified != null">
+        gmt_modified,
+      </if>
+      <if test="blackNumber != null">
+        black_number,
+      </if>
+      <if test="channelName != null">
+        channel_name,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+		  <if test="id != null">
+	        #{id,jdbcType=BIGINT},
+	      </if>
+	      <if test="gmtCreate != null">
+	        #{gmtCreate,jdbcType=TIMESTAMP},
+	      </if>
+	      <if test="gmtModified != null">
+	        #{gmtModified,jdbcType=TIMESTAMP},
+	      </if>
+	      <if test="blackNumber != null">
+	        #{blackNumber,jdbcType=VARCHAR},
+	      </if>
+	      <if test="channelName != null">
+	        #{channelName,jdbcType=VARCHAR},
+	      </if>
+	      <if test="type != null">
+	        #{type,jdbcType=INTEGER},
+	      </if>
+	      <if test="description != null">
+	        #{description,jdbcType=VARCHAR},
+	      </if>
+    </trim> 
+  </insert>
+  
+  <select id="selectCountByBlackNumber" parameterType="String" resultType="long">
+  	select count(1) from black_list where black_number = #{blackNumber}  
+  </select>
+    <select id="selectAllBlackNumber" resultType="String">
+  	select black_number from black_list;
+  </select>
+</mapper>
