@@ -116,6 +116,9 @@ public class Test {
 	}
 
 	public static void main4(String[] args) {
+		/******
+		 * test2不会冲突文件
+		 */
 		List<String> list = new ArrayList<String>();
 		list.add("username");
 		list.add("title");
@@ -128,6 +131,7 @@ public class Test {
 
 	public static void main(String[] args) {
 		/***************
+
 		 * test1分支提交
 		 ************/
 		
@@ -136,6 +140,10 @@ public class Test {
 		 * test3提交
 		 *************/
 		
+
+
+		 /* test2提交文件
+		 ***********/
 
 		
 /*		for (int m = 1; m <= 12; m++) {
