@@ -13,7 +13,7 @@ import org.apache.zookeeper.data.Stat;
 import org.junit.Before;
 
 public class ZookeeperTest {
-    private String connectString="192.168.255.128:2181";
+    private String connectString="192.168.0.103:2181";
     private int sessionTimeout = 6000;
     private ZooKeeper zkClient;
 

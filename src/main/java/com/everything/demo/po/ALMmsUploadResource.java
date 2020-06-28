@@ -20,7 +20,7 @@ public class ALMmsUploadResource extends BaseObject{
 	private String templateId;
 	
 	@JsonProperty("param")
-	private List<Map<String, String>> resourceList;
+	private String resourceList;
 	
 	@JsonProperty("sign")
 	private String sign;
@@ -57,11 +57,11 @@ public class ALMmsUploadResource extends BaseObject{
 		this.templateId = templateId;
 	}
 
-	public List<Map<String, String>> getResourceList() {
+	public String getResourceList() {
 		return resourceList;
 	}
 
-	public void setResourceList(List<Map<String, String>> resourceList) {
+	public void setResourceList(String resourceList) {
 		this.resourceList = resourceList;
 	}
 

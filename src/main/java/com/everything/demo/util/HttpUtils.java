@@ -5,6 +5,7 @@ import org.apache.http.HttpEntity;
 import org.apache.http.StatusLine;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.config.Registry;
 import org.apache.http.config.RegistryBuilder;
@@ -99,4 +100,45 @@ public class HttpUtils {
         }
         return result;
     }
+    
+    public HttpResult get(String url, String charset) {
+        HttpResult result = new HttpResult();
+        try {
+            CloseableHttpClient client = HttpClients.custom()
+                    .setSSLSocketFactory(sslSocketFactory)
+                    .setConnectionManager(connectionManager)
+                    .setConnectionManagerShared(true)
+                    .build();
+            HttpGet httpGet = new HttpGet(url);
+           // HttpPost httpPost = new HttpPost(url);
+            RequestConfig config = RequestConfig.custom().setConnectTimeout(6000).setSocketTimeout(6000).build();
+            httpGet.setConfig(config);
+           // httpPost.setConfig(config);
+/*            StringEntity requestEntity = new StringEntity(body, Charset.forName(charset));
+            requestEntity.setContentEncoding(charset);*/
+    /*        for (Map.Entry<String, String> entry : header.entrySet()) {
+            	httpGet.setHeader(entry.getKey(), entry.getValue());
+            }*/
+          //  httpPost.setEntity(requestEntity);
+            
+            CloseableHttpResponse response = client.execute(httpGet);
+            StatusLine statusLine = response.getStatusLine();
+            if (statusLine != null) {
+                result.setStatusCode(statusLine.getStatusCode());
+            }
+
+            HttpEntity responseEntity = response.getEntity();
+            if (responseEntity != null) {
+                InputStream stream = responseEntity.getContent();
+                if (stream != null) {
+                    result.setHttpBody(EntityUtils.toString(responseEntity, charset));
+                }
+            }
+        } catch (Exception e) {
+        	logger.info("http_read_timeout  url={}",url);
+            logger.error(e.getMessage(), e);
+        }
+        return result;
+    }
+    
 }

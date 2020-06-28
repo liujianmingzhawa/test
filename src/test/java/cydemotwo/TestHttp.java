@@ -11,6 +11,8 @@ import org.apache.commons.codec.digest.HmacAlgorithms;
 import org.apache.commons.codec.digest.HmacUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.everything.demo.common.HttpResult;
 import com.everything.demo.util.HttpUtils;
 
@@ -57,9 +59,32 @@ public class TestHttp {
          }
      }
     
-    public static void main(String[] args) {
-    	for(int i=0; i<1; i++){
+    public static void main2(String[] args) {
+  /*  	for(int i=0; i<1; i++){
     		main1(args);
-    	}
+    	}*/
 	}
+    
+    public static void main(String[] args) {
+        String url = "http://39.106.42.90:8080/QXT_WebsiteSecurityCheck4/PassiveMSG?ShortURL=tmq11.cc";
+
+        long millis = System.currentTimeMillis();
+        HttpResult httpResult = (new HttpUtils()).get(url, "utf-8");
+        System.out.println(httpResult);
+        String httpBody = httpResult.getHttpBody();
+        JSONObject parseObject = JSON.parseObject(httpBody);
+    	String realUrl = parseObject.getString("RealUrl");
+    	String domainName = parseObject.getString("DomainName");
+    	String ip = parseObject.getString("IP");
+    	boolean isLocal = parseObject.getBoolean("isLocal");
+    	boolean hasICP = parseObject.getBoolean("hasICP");
+    	boolean isSafe = parseObject.getBoolean("isSafe");
+    	Integer status =parseObject.getInteger("status");
+        System.out.println(System.currentTimeMillis() - millis);
+        
+        
+        
+	}
+    
+    
 }	

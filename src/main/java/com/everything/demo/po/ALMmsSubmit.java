@@ -22,6 +22,9 @@ public class ALMmsSubmit extends BaseObject{
 	
 	@JsonProperty("timestamp")
 	private String timestamp;
+	
+	@JsonProperty("extNum")
+	private String extNum;
 
 
 	public String getSequenceNumber() {
@@ -70,6 +73,14 @@ public class ALMmsSubmit extends BaseObject{
 
 	public void setTemplateId(String templateId) {
 		this.templateId = templateId;
+	}
+
+	public String getExtNum() {
+		return extNum;
+	}
+
+	public void setExtNum(String extNum) {
+		this.extNum = extNum;
 	}
 
 }
