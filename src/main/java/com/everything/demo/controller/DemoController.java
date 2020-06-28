@@ -55,7 +55,7 @@ public class DemoController {
 		TimeLimit timeLimit = timeLimitMapper.selectByPrimaryKey(10L);
 		return "测试============" + timeLimit.getChannelName();
 	}
-
+	
 	@RequestMapping("/doEvent")
 	public String doEvent(HttpServletRequest request) throws Exception {
 		String requestBody = getRequestBody(request);
@@ -141,5 +141,5 @@ public class DemoController {
 		return map;
 	}
 		
-
+	
 }

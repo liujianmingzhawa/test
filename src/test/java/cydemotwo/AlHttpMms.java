@@ -12,20 +12,28 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.codec.digest.HmacAlgorithms;
 import org.apache.commons.codec.digest.HmacUtils;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
+import org.apache.commons.lang3.time.DateUtils;
+import org.apache.xmlbeans.impl.xb.xsdschema.All;
 import org.springframework.util.Base64Utils;
 
+import com.alibaba.dubbo.common.utils.ConcurrentHashSet;
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.everything.demo.common.HttpResult;
 import com.everything.demo.po.ALMmsSubmit;
 import com.everything.demo.po.ALMmsUploadResource;
+import com.everything.demo.po.AllSign;
 import com.everything.demo.util.HttpUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -38,7 +46,7 @@ public class AlHttpMms {
         header.put("Content-Type", "application/json;charset=utf-8");
         header.put("Accept", "application/json");
         String charset = "UTF-8";
-/*        String accessKey = "81W05fJOi5yRDBL8";
+ /*       String accessKey = "81W05fJOi5yRDBL8";
         String secretKey = "aVUJ0cwFJ3BblHT6nD09WhG9xceA8ZGr5KHGE1UhRIO0ewndavP7m2Q0o9wXP96k";*/
         String accessKey = "0eP58dfebH7e0C71";
         String secretKey = "XhEeJhyB9bxug2WaEOvgakG8zFd5Nc05BEJjXliEiAvR8MUUjo8N9KsK6SZ80UGV";
@@ -48,8 +56,8 @@ public class AlHttpMms {
         alMmsUploadResource.setTemplateId(UUID.randomUUID().toString());
         alMmsUploadResource.setTimestamp(String.valueOf(System.currentTimeMillis()));
         alMmsUploadResource.setTitle("视频短信测试");
-        List<Map<String, String>> resourceList =  getResourceList();
-        alMmsUploadResource.setResourceList(resourceList);
+        List<List<Map<String, String>>> resourceList =  getResourceList();
+        alMmsUploadResource.setResourceList(JSON.toJSONString(resourceList));
         alMmsUploadResource.setSign(getAlTmplateUploadSign(alMmsUploadResource,url,secretKey,accessKey));
         ObjectMapper mapper = new ObjectMapper();
         String requestBody = mapper.writeValueAsString(alMmsUploadResource);
@@ -68,7 +76,7 @@ public class AlHttpMms {
 		return DigestUtils.md5Hex(builder.toString()).toLowerCase();
 	}
 
-	private static List<Map<String, String>> getResourceList() throws Exception {
+/*	private static List<Map<String, String>> getResourceList() throws Exception {
 		List<Map<String, String>> list = new ArrayList<>();
 		Map<String, String> headjpg = new HashMap<>();
 		headjpg.put("name", "激战head.jpg");
@@ -95,6 +103,39 @@ public class AlHttpMms {
 		list.add(video);
 		list.add(endjpg);
 		list.add(endjpgq);
+		return list;
+	}*/
+	private static List<List<Map<String, String>>> getResourceList() throws Exception {
+		List<List<Map<String, String>>> list = new ArrayList<>();
+		List<Map<String, String>> list1 = new ArrayList<>();
+		List<Map<String, String>> list2 = new ArrayList<>();
+		Map<String, String> headjpg = new HashMap<>();
+		headjpg.put("name", "激战head.jpg");
+		String headjpgurl = "C:\\Users\\ljm\\Desktop\\测试视频短信素材\\改01头.jpg";
+		headjpg.put("content",getEncodeBase64Str(headjpgurl));
+		Map<String, String> file = new HashMap<>();
+		file.put("name", "激战.txt");
+		String fileUrl = "C:\\Users\\ljm\\Desktop\\测试视频短信素材\\AW超级短信文案.txt";
+		file.put("content", getFileStr(fileUrl));
+		Map<String, String> video = new HashMap<>();
+		video.put("name", "激战.mp4");
+		String videoUrl = "C:\\Users\\ljm\\Desktop\\测试视频短信素材\\AW大客户超级短信.mp4";
+		video.put("content", getEncodeBase64Str(videoUrl));
+		Map<String, String> endjpg = new HashMap<>();
+		endjpg.put("name", "激战end.jpg");
+		String endjpgUrl = "C:\\Users\\ljm\\Desktop\\测试视频短信素材\\改02尾.jpg";
+		endjpg.put("content",  getEncodeBase64Str(endjpgUrl));
+		Map<String, String> endjpgq = new HashMap<>();
+		endjpgq.put("name", "激战end.jpg");
+		String endjpgUrlq = "C:\\Users\\ljm\\Desktop\\测试视频短信素材\\改02尾.jpg";
+		endjpgq.put("content",  getEncodeBase64Str(endjpgUrlq));
+		list1.add(file);
+		list2.add(headjpg);
+		list2.add(video);
+		list2.add(endjpg);
+		list2.add(endjpgq);
+		list.add(list1);
+		list.add(list2);
 		return list;
 	}
 	
@@ -141,7 +182,7 @@ public class AlHttpMms {
         
         String destNumber = "13582369300";
         String sequenceNumber = UUID.randomUUID().toString();
-        String templateId = "78c758b2-0d91-4e63-a989-89c35c4068e0";//TODO
+        String templateId = "3";//TODO
         String timestamp = String.valueOf(System.currentTimeMillis());
         
         ALMmsSubmit submit = new ALMmsSubmit();
@@ -151,6 +192,7 @@ public class AlHttpMms {
         submit.setTemplateId(templateId);
         submit.setTimestamp(timestamp);  
         submit.setSign(getAlSubmitSign(submit,url,secretKey,accessKey));
+        submit.setExtNum("666");//TODO 扩展码
         
         ObjectMapper mapper = new ObjectMapper();
         String requestBody = mapper.writeValueAsString(submit);
@@ -175,6 +217,11 @@ public class AlHttpMms {
 		// 上传资源
 		//main1(args);
 		//下发
-		main2(args);
+		//main2(args);
+		
+		//账户名生成规则
+	/*	String RANDOM_CHARS = "0123456789";
+		System.err.println(RandomStringUtils.random(6, RANDOM_CHARS));*/
+		
 	}
 }
